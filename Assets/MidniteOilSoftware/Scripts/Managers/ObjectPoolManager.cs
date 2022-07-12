@@ -177,16 +177,17 @@ public class ObjectPoolManager : MonoBehaviour
 
     private GameObject InstantiateGameObject(GameObject prefab, Vector3 position, Quaternion rotation, bool setActive)
     {
-        GameObject go = InstantiateGameObject(prefab, setActive);
-        go.transform.position = position;
-        go.transform.rotation = rotation;
+        GameObject go = Instantiate(prefab, position, rotation);
+        DontDestroyOnLoad(go);
+        go.SetActive(setActive);        
         return go;
     }
 
     private GameObject InstantiateGameObject(GameObject prefab, Transform parentTransform, bool setActive)
     {
-        GameObject go = InstantiateGameObject(prefab, parentTransform.position, parentTransform.rotation, setActive);
-        go.transform.SetParent(parentTransform);
+        GameObject go = Instantiate(prefab, parentTransform);
+        DontDestroyOnLoad(go);
+        go.SetActive(setActive);
         return go;
     }
 
