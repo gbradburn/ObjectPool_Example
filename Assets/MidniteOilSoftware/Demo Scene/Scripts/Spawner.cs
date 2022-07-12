@@ -1,16 +1,11 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class Spawner : MonoBehaviour
 {
-    [SerializeField]
-    private List<GameObject> _prefabs;
-    [SerializeField] [Range(0f, 5f)]
-    private float _spawnDelay = 0.1f;
-
+    [SerializeField] private List<GameObject> _prefabs;
+    [SerializeField] [Range(0f, 5f)] private float _spawnDelay = 0.1f;
     [SerializeField] [Range(10f, 30f)] private float _launchForce = 20;
 
     private Vector3 _spawnPosition;
@@ -20,6 +15,7 @@ public class Spawner : MonoBehaviour
         _spawnPosition = transform.position;
     }
 
+    // Repeatedly spawn one of our prefab types (selected randomly)
     private void OnEnable()
     {
         InvokeRepeating(nameof(SpawnRandomObject), 0f, _spawnDelay);

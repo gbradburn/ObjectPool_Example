@@ -5,7 +5,10 @@ public class ObjectPoolManager : MonoBehaviour
 {
     #region Private members
 
+    // Singleton instance
     private static ObjectPoolManager _instance;
+    
+    // Internally we manage a dictionary mapping prefab names to Pools (Queues of GameObject)
     private readonly Dictionary<string, Queue<GameObject>> _pool = new Dictionary<string, Queue<GameObject>>();
 
     #endregion Private Members
@@ -14,6 +17,7 @@ public class ObjectPoolManager : MonoBehaviour
 
     private void Awake()
     {
+        // Implement singleton instance pattern
         if (_instance == null)
         {
             _instance = this;
@@ -28,6 +32,15 @@ public class ObjectPoolManager : MonoBehaviour
 
     #region Spawning
 
+    /// <summary>
+    /// Spawn a GameObject from a prefab.
+    /// If a pool does not already exist for this prefab type one will be created.
+    /// If the pool contains an GameObject it will be returned, otherwise, a new
+    /// GameObject will be instantiated.
+    /// </summary>
+    /// <param name="prefab">Type of GameObject to spawn.</param>
+    /// <param name="setActive">Optional parameter to enable the GameObject after spawning. The default is <c>true</c></param>
+    /// <returns>The spawned GameObject.</returns>
     public static GameObject SpawnGameObject(GameObject prefab, bool setActive = true)
     {
         if (_instance == null) return null;
@@ -45,6 +58,17 @@ public class ObjectPoolManager : MonoBehaviour
         return go;
     }
 
+    /// <summary>
+    /// Spawn a GameObject from a prefab.
+    /// If a pool does not already exist for this prefab type one will be created.
+    /// If the pool contains an GameObject it will be returned, otherwise, a new
+    /// GameObject will be instantiated.
+    /// </summary>
+    /// <param name="prefab">Type of GameObject to spawn.</param>
+    /// <param name="position">Position at which to spawn the GameObject.</param>
+    /// <param name="rotation">Rotation to apply to the GameObject after spawning.</param>
+    /// <param name="setActive">Optional parameter to enable the GameObject after spawning. The default is <c>true</c>.</param>
+    /// <returns>The spawned GameObject.</returns>
     public static GameObject SpawnGameObject(GameObject prefab, Vector3 position, Quaternion rotation, bool setActive = true)
     {
         if (_instance == null) return null;
@@ -67,6 +91,11 @@ public class ObjectPoolManager : MonoBehaviour
 
     #region Despawning / Destroying
 
+    /// <summary>
+    /// Despawn the specified GameObject.
+    /// The object will be deactivated and added to the appropriate pool for later reuse.
+    /// </summary>
+    /// <param name="go">The GameObject to despawn.</param>
     public static void DespawnGameObject(GameObject go)
     {
         if (go == null) return;
@@ -75,6 +104,11 @@ public class ObjectPoolManager : MonoBehaviour
         pool.Enqueue(go);
     }
 
+    /// <summary>
+    /// Permanently destroy all GameObjects for the specified prefab type.
+    /// All queued GameObjects for the specified prefab type will be destroyed.
+    /// </summary>
+    /// <param name="prefab">The type of prefab you want to permanently destroy.</param>
     public static void PermanentlyDestroyGameObjectsOfType(GameObject prefab)
     {
         if (_instance == null) return;
@@ -95,6 +129,9 @@ public class ObjectPoolManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Destroy all pooled GameObjects and clear their pools.
+    /// </summary>
     public static void EmptyPool()
     {
         if (_instance == null) return;
