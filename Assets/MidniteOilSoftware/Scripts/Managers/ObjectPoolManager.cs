@@ -9,7 +9,7 @@ namespace MidniteOilSoftware
 
         // Singleton instance
         private static ObjectPoolManager _instance;
-        [SerializeField] private int _initialCapacity = 200;
+        [SerializeField] private int _initialCapacity = 32;
 
         // Internally we manage a dictionary mapping prefab names to Pools (Queues of GameObject)
         private readonly Dictionary<string, Queue<GameObject>> _pool = new();
@@ -33,6 +33,17 @@ namespace MidniteOilSoftware
 
         #endregion Unity Callbacks
 
+        /// <summary>
+        /// Set initial capacity of pools. The default is 32.
+        /// The capacity will always double when trying to add
+        /// a new object to a queue at current capacity.
+        /// </summary>
+        /// <param name="initialCapacity"></param>
+        public void SetInitialCapacity(int initialCapacity)
+        {
+            _initialCapacity = initialCapacity;
+        }
+        
         #region Spawning
 
         /// <summary>
@@ -104,6 +115,7 @@ namespace MidniteOilSoftware
         {
             if (go == null) return;
             go.SetActive(false);
+            go.GetComponent<IDespawnedPoolObject>()?.ReturnedToPool();
             var pool = _instance.GetPool(go);
             pool.Enqueue(go);
         }
@@ -182,7 +194,7 @@ namespace MidniteOilSoftware
             {
                 Debug.LogWarning("Dequeued null gameObject (" + prefab.name + ") from pool.");
             }
-
+            go.GetComponent<IRetrievedPoolObject>()?.RetrievedFromPool(prefab);
             return go;
         }
 
