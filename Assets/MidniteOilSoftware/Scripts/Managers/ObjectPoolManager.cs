@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace MidniteOilSoftware
+namespace MidniteOilSoftware.ObjectPoolManager
 {
     public class ObjectPoolManager : MonoBehaviour
     {

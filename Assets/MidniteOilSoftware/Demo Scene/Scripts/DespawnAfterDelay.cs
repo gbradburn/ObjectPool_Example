@@ -1,4 +1,4 @@
-using MidniteOilSoftware;
+using MidniteOilSoftware.ObjectPoolManager;
 using UnityEngine;
 
 /// <summary>

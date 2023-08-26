@@ -1,4 +1,4 @@
-namespace MidniteOilSoftware
+namespace MidniteOilSoftware.ObjectPoolManager
 {
     /// <summary>
     /// Optional interface that can be implemented to perform cleanup actions when

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace MidniteOilSoftware
+namespace MidniteOilSoftware.ObjectPoolManager
 {
     /// <summary>
     /// Optional interface for performing any special actions when an

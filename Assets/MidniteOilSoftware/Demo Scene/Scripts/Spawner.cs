@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using MidniteOilSoftware;
+using MidniteOilSoftware.ObjectPoolManager;
 using UnityEngine;
 using Random = UnityEngine.Random;
 

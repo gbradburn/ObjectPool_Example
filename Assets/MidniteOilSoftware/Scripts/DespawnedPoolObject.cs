@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace MidniteOilSoftware
+namespace MidniteOilSoftware.ObjectPoolManager
 {
     /// <summary>
     /// Optional component that can be added to a pooled object. It implements the ReturnedToPool()
